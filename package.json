@@ -1,0 +1,21 @@
+{
+  "name": "mk-guide",
+  "version": "1.0.4",
+  "description": "A light JavaScript library to guide the user to focus the important part, including fix element",
+  "main": "index.js",
+  "style": "style.css",
+  "file": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build",
+    "build": "babel src -d lib"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  },
+  "author": "Qianhao Luo",
+  "license": "MIT"
+}

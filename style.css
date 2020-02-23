@@ -1,0 +1,40 @@
+.mask .mask-tip {
+  overflow-wrap: break-word;
+  color: rgb(24, 24, 24)
+}
+
+.mask .mask-tip .mask-des {
+  padding: 5px 7px;
+}
+
+.mask .mask-tip .mask-btn-group {
+  position: relative;
+  justify-content: space-between;
+  margin: 10px 30px;
+  top: 10px;
+}
+
+.mask .mask-tip button {
+  outline: none;
+  background-color: #348b86; /* Green */
+  border-radius: 3px;
+  color: white;
+  padding: 4px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+
+  background-color: white;
+  color: black;
+  border: 2px solid #348b86;
+}
+
+.mask .mask-tip button:hover {
+  background-color: #348b86;
+  color: white;
+}

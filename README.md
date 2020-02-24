@@ -17,7 +17,7 @@
 - There is [Demo](https://law-chain-hot.github.io/demo-mk-guide/) with default value
 
 <p align="center">
-<img src = "https://github.com/law-chain-hot/Blog/blob/master/0-src/2-%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84%E8%BD%AE%E5%AD%90/1-mk-guide-intro.gif" style="width:200px;")
+<img src = "https://github.com/law-chain-hot/Blog/blob/master/0-src/2-%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84%E8%BD%AE%E5%AD%90/1-mk-guide-intro.gif" style="width:100px;")
 </p>
 
 ## Install

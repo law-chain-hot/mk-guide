@@ -1,5 +1,12 @@
 class MaskGuide {
-    constructor() {
+    constructor(option = {}) {
+        this.options = {
+            // buttonColor: 'black',
+            // skipButtonColor: 'firebrick',
+
+            ...option,
+        };
+
         // 1. init
         this.initValues()
         this.initNode()
@@ -50,6 +57,11 @@ class MaskGuide {
         this.maskTipNode.insertAdjacentElement("beforeend", this.maskBtnGroupNode)
 
 
+        // mask-button-skip
+        this.maskBtnSkipNode = document.createElement('button');
+        this.maskBtnSkipNode.className = 'mask-btn-skip';
+        this.maskBtnGroupNode.insertAdjacentElement("beforeend", this.maskBtnSkipNode)
+
         // mask-button-before
         this.maskBtnBeforeNode = document.createElement('button');
         this.maskBtnBeforeNode.className = 'mask-btn-before';
@@ -61,11 +73,59 @@ class MaskGuide {
         this.maskBtnNextNode = document.createElement('button');
         this.maskBtnNextNode.className = 'mask-btn-next';
         this.maskBtnGroupNode.insertAdjacentElement("beforeend", this.maskBtnNextNode)
+
+        // button
+        this.maskButtonNode = document.querySelector('.mask .mask-tip button');
     }
 
 
     initCSS() {
         this.maskBtnGroupNode.style.display = "flex"
+
+
+        // button color
+        // if (this.options.skipButtonColor && this.options.buttonColor){
+        //     this.options.skipButtonColor = "firebrick"
+        // }
+        if ( !this.options.buttonColor) {
+            this.options.buttonColor = "black"
+            if ( !this.options.skipButtonColor) this.options.skipButtonColor = "firebrick"
+        }
+
+
+        this.maskBtnNextNode.style.borderColor = this.options.buttonColor;
+        this.maskBtnBeforeNode.style.borderColor = this.options.buttonColor;
+
+        // skip button color
+        this.skipButtonColor = this.options.buttonColor;
+        if (this.options.skipButtonColor) this.skipButtonColor = this.options.skipButtonColor;
+        this.maskBtnSkipNode.style.borderColor = this.skipButtonColor;
+
+
+        //
+        this.maskBtnSkipNode.style.position = "relative";
+        this.maskBtnSkipNode.style.right = "22px";
+
+
+
+
+        this.initMouseEvent(this.maskBtnNextNode, this.options.buttonColor);
+        this.initMouseEvent(this.maskBtnBeforeNode, this.options.buttonColor);
+        this.initMouseEvent(this.maskBtnSkipNode, this.skipButtonColor);
+
+
+    }
+
+    initMouseEvent(el, color) {
+        el.onmouseover = () => {
+            el.style.backgroundColor = color;
+            el.style.color = "white";
+
+        }
+        el.onmouseout = () => {
+            el.style.backgroundColor = "white";
+            el.style.color = "black";
+        }
     }
 
     setMask(el) {
@@ -113,8 +173,8 @@ class MaskGuide {
         this.maskTipNode.style.left = 10 + "px";
         this.maskTipNode.style.top = this.offsetHeight + 35 + "px";
 
-        this.maskTipNode.style.width = "200px";
-        this.maskTipNode.style.minHeight = "100px";
+        this.maskTipNode.style.width = "270px";
+        // this.maskTipNode.style.minHeight = "120px";
         this.maskTipNode.style.backgroundColor = "white"
         this.maskTipNode.style.borderRadius = "3px"
         this.maskTipNode.style.padding = "5px"
@@ -126,9 +186,20 @@ class MaskGuide {
 
 
     setMaskBtnNode() {
+
+        this.maskBtnSkipNode.innerHTML = 'Skip'
+        this.skip = (e) => {
+            this.maskNode.style.display = "none";
+        }
+        this.maskBtnSkipNode.onclick = this.skip;
+
         // next btn
         this.maskBtnNextNode.innerHTML = 'Next→'
         this.next = (e) => {
+            // clear focus
+            document.querySelector(this.guides[this.count].element).blur()
+            // console.log(document.body.focus());
+            
             this.count++
             if (this.guides[this.count]) {
                 this.maskBtnNextNode.innerHTML = 'Next→'
@@ -146,6 +217,9 @@ class MaskGuide {
         this.maskBtnBeforeNode.style.visibility = "hidden"
         this.maskBtnBeforeNode.innerHTML = '←Before'
         this.before = (e) => {
+            // clear focus
+            document.querySelector(this.guides[this.count].element).blur()
+
             this.count--
             this.maskBtnNextNode.innerHTML = 'Next→'
             if (this.count === 0) {
@@ -168,12 +242,18 @@ class MaskGuide {
             if (event.keyCode === 39 || event.which === 39) {
                 this.next();
             }
+            if (event.keyCode === 27 || event.which === 27) {
+                this.skip();
+            }
         });
     }
 
 
     maskStart(guide) {
         let ele = document.querySelector(guide.element)
+        if (guide.shouldFocus) {
+            ele.focus();
+        }
         this.setMask(ele)
         this.setMaskTip()
         this.setMaskDesNode(guide.description)

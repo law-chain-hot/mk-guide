@@ -1,4 +1,17 @@
-# MK-Guide
+<h1 align="center"> Mk-Guide</h1>
+<br/> 
+<p align="center">
+  <a href="">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+  <a href="https://www.npmjs.com/package/mk-guide">
+    <img alt="npm" src="https://img.shields.io/npm/v/mk-guide">
+  </a>
+  <a href="https://npmjs.org/package/driver.js">
+    <img alt="npm" src="https://img.shields.io/npm/dt/mk-guide">
+  </a>
+</p>
+
 
 A light JavaScript library to guide the user to focus the important part, including fix element.
 
@@ -49,7 +62,7 @@ mask.guides = [
     {   
         element: ".step2",
         description: "Tap in here, and focus it (shouldFocus: true)"
-        shouldFocus: ture // optional: focus the element when you highlight it
+        shouldFocus: true // optional: focus the element when you highlight it
     },
     {
         element: "box3",

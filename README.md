@@ -7,7 +7,7 @@
   <a href="https://www.npmjs.com/package/mk-guide">
     <img alt="npm" src="https://img.shields.io/npm/v/mk-guide">
   </a>
-  <a href="https://npmjs.org/package/driver.js">
+  <a href="https://npmjs.org/package/mk-guide">
     <img alt="npm" src="https://img.shields.io/npm/dt/mk-guide">
   </a>
 </p>

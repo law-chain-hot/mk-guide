@@ -1,6 +1,6 @@
 <h1 align="center"> Mk-Guide</h1>
 <br/> 
-<p align="center">
+<p align="center"> 
   <a href="">
     <img src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
@@ -12,7 +12,7 @@
   </a>
 </p>
 
-
+- 一个轻量级制作网站新手引导的JavaScript包，原生JavaScript实现，可高亮fix元素。附[Demo](https://law-chain-hot.github.io/demo-mk-guide/) 地址
 - A light JavaScript library to guide the user to focus the important part, including fix element.
 - There is [Demo](https://law-chain-hot.github.io/demo-mk-guide/) with default value
 
@@ -21,7 +21,7 @@
 </p>
 
 ## Install
-```shell
+```bash
 npm install mk-guide
 or npm i mk-guide
 or yarn add mk-guide

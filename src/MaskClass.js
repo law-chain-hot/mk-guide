@@ -16,8 +16,8 @@ class MaskGuide {
         // 2. guides
         this.guides = null
 
-        // 3. start
-        // call start()
+        // 3. online the mask node
+        // this.maskNode.style.display = 'block';
 
     }
 
@@ -40,6 +40,8 @@ class MaskGuide {
         this.maskNode = document.createElement('div');
         this.maskNode.className = 'mask';
         this.docNode.insertAdjacentElement("beforeend", this.maskNode);
+        // offline the mask node
+        this.maskNode.style.display = 'none';
 
         // mask-tip
         this.maskTipNode = document.createElement('div');
@@ -76,6 +78,8 @@ class MaskGuide {
 
         // button
         this.maskButtonNode = document.querySelector('.mask .mask-tip button');
+
+
     }
 
 
@@ -87,9 +91,9 @@ class MaskGuide {
         // if (this.options.skipButtonColor && this.options.buttonColor){
         //     this.options.skipButtonColor = "firebrick"
         // }
-        if ( !this.options.buttonColor) {
+        if (!this.options.buttonColor) {
             this.options.buttonColor = "black"
-            if ( !this.options.skipButtonColor) this.options.skipButtonColor = "firebrick"
+            if (!this.options.skipButtonColor) this.options.skipButtonColor = "firebrick"
         }
 
 
@@ -132,10 +136,11 @@ class MaskGuide {
         // 1. get the value of element
         this.offsetWidth = el.offsetWidth;
         this.offsetHeight = el.offsetHeight;
-        this.getAbsoluteLeft = el.getBoundingClientRect().left + document.documentElement.scrollLeft;
-        this.getAbsoluteTop = el.getBoundingClientRect().top + document.documentElement.scrollTop;
-        this.getAbsoluteRight = el.getBoundingClientRect().right + document.documentElement.scrollRight;
-        this.getAbsoluteBottom = el.getBoundingClientRect().bottom + document.documentElement.scrollBottom;
+        this.getAbsoluteLeft = el.getBoundingClientRect().left + (document.documentElement.scrollLeft || 0);
+        this.getAbsoluteTop = el.getBoundingClientRect().top + (document.documentElement.scrollTop || 0);
+        this.getAbsoluteRight = el.getBoundingClientRect().right + (document.documentElement.scrollRight || 0);
+        // console.log(this.getAbsoluteRight)
+        this.getAbsoluteBottom = el.getBoundingClientRect().bottom + (document.documentElement.scrollBottom || 0);
 
         // 2. get the value of screen
         this.screenWidth = this.docNode.scrollWidth;
@@ -153,8 +158,14 @@ class MaskGuide {
         // 3.3 border
         this.maskNode.style.borderLeft = this.getAbsoluteLeft - 10 + "px";
         this.maskNode.style.borderTop = this.getAbsoluteTop - 10 + "px";
-        this.maskNode.style.borderRight = this.screenWidth - this.offsetWidth - this.getAbsoluteLeft - 10 + "px";
-        this.maskNode.style.borderBottom = this.screenHeight - this.offsetHeight - this.getAbsoluteTop - 10 + "px";
+        this.maskNode.style.borderBottom = this.screenHeight - this.offsetHeight - this.getAbsoluteTop - 10 + "px" + " solid";
+        this.maskNode.style.borderRight = (this.screenWidth - this.offsetWidth - this.getAbsoluteLeft - 10 > 0 ? this.screenWidth - this.offsetWidth - this.getAbsoluteLeft - 10 : 0) + "px" + " solid";
+
+
+
+
+
+
 
         this.maskNode.style.borderColor = "rgba(0, 0, 0, 0.5)";
         this.maskNode.style.borderStyle = 'solid';
@@ -169,15 +180,23 @@ class MaskGuide {
     }
 
     setMaskTip() {
-        this.maskTipNode.style.position = "absolute";
-        this.maskTipNode.style.left = 10 + "px";
-        this.maskTipNode.style.top = this.offsetHeight + 35 + "px";
 
-        this.maskTipNode.style.width = "270px";
-        // this.maskTipNode.style.minHeight = "120px";
+        this.maskTipNode.style.position = "absolute";
+        this.maskTipNode.style.top = this.offsetHeight + 35 + "px";
+        let diff = this.getAbsoluteLeft + 270
+
+        if (diff > document.documentElement.clientWidth) {
+            this.maskTipNode.style.left = '-270px';
+        } else {
+            this.maskTipNode.style.left = -10 + "px";
+        }
+
+
+
         this.maskTipNode.style.backgroundColor = "white"
         this.maskTipNode.style.borderRadius = "3px"
         this.maskTipNode.style.padding = "5px"
+        this.maskTipNode.style.width = "270px";
     }
 
     setMaskDesNode(des) {
@@ -189,6 +208,7 @@ class MaskGuide {
 
         this.maskBtnSkipNode.innerHTML = 'Skip'
         this.skip = (e) => {
+            document.removeEventListener('keydown', keyEvent);
             this.maskNode.style.display = "none";
         }
         this.maskBtnSkipNode.onclick = this.skip;
@@ -199,7 +219,7 @@ class MaskGuide {
             // clear focus
             document.querySelector(this.guides[this.count].element).blur()
             // console.log(document.body.focus());
-            
+
             this.count++
             if (this.guides[this.count]) {
                 this.maskBtnNextNode.innerHTML = 'Next→'
@@ -235,7 +255,7 @@ class MaskGuide {
 
 
         // keypress
-        document.addEventListener('keydown', (e) => { //event is what we tap in the keyboard
+        let keyEvent = (e) => { //event is what we tap in the keyboard
             if (event.keyCode === 37 || event.which === 37) {
                 this.before();
             }
@@ -245,11 +265,13 @@ class MaskGuide {
             if (event.keyCode === 27 || event.which === 27) {
                 this.skip();
             }
-        });
+        }
+        document.addEventListener('keydown', keyEvent);
     }
 
 
     maskStart(guide) {
+        this.maskTipNode.style.display = 'none';
         let ele = document.querySelector(guide.element)
         if (guide.shouldFocus) {
             ele.focus();
@@ -257,9 +279,11 @@ class MaskGuide {
         this.setMask(ele)
         this.setMaskTip()
         this.setMaskDesNode(guide.description)
+        this.maskTipNode.style.display = 'block';
     }
 
     start() {
+        this.maskNode.style.display = 'block';
         if (this.guides) {
             this.maskStart(this.guides[this.count])
         }

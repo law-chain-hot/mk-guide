@@ -12,13 +12,14 @@
   </a>
 </p>
 
-- 一个轻量级制作网站新手引导的JavaScript包，原生JavaScript实现，可高亮fix元素。附[Demo](https://law-chain-hot.github.io/demo-mk-guide/) 地址
 - A light JavaScript library to guide the user to focus the important part, including fix element.
 - There is [Demo](https://law-chain-hot.github.io/demo-mk-guide/) with default value
+- (一个轻量级制作网站新手引导的JavaScript包，原生JavaScript实现，可高亮fix元素。附[Demo](https://law-chain-hot.github.io/demo-mk-guide/) 地址)
 
-<p align="center">
+
+<!-- <p align="center">
 <img src = "https://github.com/law-chain-hot/Blog/blob/master/0-src/2-%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84%E8%BD%AE%E5%AD%90/1-mk-guide-intro.gif" style="width:100px;")
-</p>
+</p> -->
 
 ## Install
 ```bash
@@ -79,6 +80,12 @@ mask.start() // start the mask guide
 
 
 ## update history
+### v1.4
+Debug: Clear the display bug
+
+### v1.3
+Debug: Clear the keypress && Beyond the margin
+
 ### v1.1.0
 Added customized color API and shouldFocus API
 

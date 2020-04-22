@@ -14,7 +14,7 @@
 
 - A light JavaScript library to guide the user to focus the important part, including fix element.
 - There is [Demo](https://law-chain-hot.github.io/demo-mk-guide/) with default value
-- (一个轻量级制作网站新手引导的JavaScript包，原生JavaScript实现，可高亮fix元素。附[Demo](https://law-chain-hot.github.io/demo-mk-guide/) 地址)
+<!-- - (一个轻量级制作网站新手引导的JavaScript包，原生JavaScript实现，可高亮fix元素。附[Demo](https://law-chain-hot.github.io/demo-mk-guide/) 地址) -->
 
 
 <!-- <p align="center">
@@ -37,6 +37,11 @@ Import the library and the CSS file
 import MkGuide from 'mk-guide'
 import 'mk-guide/style.css'
 ```
+Or for css file
+```html
+//index.html
+<link type="text/css" rel="stylesheet" href="node_modules/mk-guide/style.css">
+```
 
 ### Creat a variable of guide
 Input a new variable `mask`
@@ -48,8 +53,9 @@ Or you could customize it with color:
 ```js
 // Customize it
 let mask = new MkGuide({ 
-    buttonColor: "gold" // optional: 
-    skipButtonColor: "firebrick" // optional: 
+    buttonColor: "gold" // optional   
+    skipButtonColor: "firebrick" // optional
+    mouseHover: "true" // optional  default:false
 })  
 ```
 
@@ -60,7 +66,10 @@ Set the route of guide, and call the `mask.start()`.
 mask.guides = [
     {   
         element: "#step1",                // querySelector
+        imgURL: 'https://xxxx/xxx.com',
+        header: 'Welcome',
         description: "this is step 1"    // the words of tip
+        shouldFocus: true                // optional: focus the element when you highlight it
     },
     {   
         element: ".step2",
@@ -76,10 +85,40 @@ mask.guides = [
 mask.start() // start the mask guide
 ```
 
-### 
+Or you can use `intro`.
+```js
+// Must use intro for the first guide item
+mask.guides = [
+    {   
+        intro: true, // only use it for the first item      
+        imgURL: 'https://xxxx/xxx.com',
+        header: 'Welcome',
+        description: "this is step 1" 
+        // And do not use 'element' and 'shouldFocus' for intro item
+    },
+    {   
+        element: ".step2",
+        description: "Tap in here, and focus it (shouldFocus: true)"
+        shouldFocus: true // optional: focus the element when you highlight it
+    },
+    {
+        element: "box3",
+        description: "You can control it with'→ ← ESC'"
+    },
+]
+```
+
+
 
 
 ## update history
+
+### v1.8
+Added: header, picture, intro, and resize refresh
+
+### v1.7
+Optimized code structure
+
 ### v1.4
 Debug: Clear the display bug
 

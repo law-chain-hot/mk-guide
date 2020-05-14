@@ -53,9 +53,10 @@ Or you could customize it with color:
 ```js
 // Customize it
 let mask = new MkGuide({ 
-    buttonColor: "gold" // optional   
-    skipButtonColor: "firebrick" // optional
-    mouseHover: "true" // optional  default:false
+    buttonColor: "gold", // optional   
+    skipButtonColor: "firebrick", // optional
+    mouseHover: "true", // optional  default:false
+    mode: "dark" // default: light
 })  
 ```
 
@@ -90,7 +91,7 @@ Or you can use `intro`.
 // Must use intro for the first guide item
 mask.guides = [
     {   
-        intro: true, // only use it for the first item      
+        intro: true, // ONLY can be used for the first item! And no element   
         imgURL: 'https://xxxx/xxx.com',
         header: 'Welcome',
         description: "this is step 1" 
@@ -112,6 +113,15 @@ mask.guides = [
 
 
 ## update history
+### v1.10
+Debug: Fixed the bug of display about the bottom item
+
+
+### v1.9
+Added: Dark mode and light mode
+
+Debug: Clear the display bug
+
 
 ### v1.8
 Added: header, picture, intro, and resize refresh

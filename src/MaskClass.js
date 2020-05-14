@@ -23,11 +23,12 @@ class MaskGuide {
             ...option,
         };
 
-        // 1. init
-        this.initValues()
-        this.initNode()
-        this.setMaskBtnNode() // add even to button
-        this.initCSS()
+        // // 1. init
+        // this.initValues()
+        // this.initNode()
+        // this.setMaskBtnNode() // add even to button
+        // this.initCSS()
+        this.isStart = false
 
         // 2. guides
         this.guides = null
@@ -108,6 +109,8 @@ class MaskGuide {
 
     initCSS() {
 
+        // mask content
+        // this.docNode.style
 
         // this.maskBtnGroupNode.style.display = "flex"
         this.maskBtnGroupNode.width = "270px"
@@ -133,7 +136,16 @@ class MaskGuide {
             this.initMouseEvent(this.maskBtnNextNode, this.options.buttonColor);
             this.initMouseEvent(this.maskBtnBeforeNode, this.options.buttonColor);
             this.initMouseEvent(this.maskBtnSkipNode, this.skipButtonColor);
+        } else {
+            this.maskBtnNextNode.style.backgroundColor = this.options.buttonColor;
+            this.maskBtnNextNode.style.color = "white";
+            this.maskBtnBeforeNode.style.backgroundColor = this.options.buttonColor;
+            this.maskBtnBeforeNode.style.color = "white";
+            this.maskBtnSkipNode.style.backgroundColor = this.options.buttonColor;
+            this.maskBtnSkipNode.style.color = "white";
         }
+
+
     }
 
     initMouseEvent(el, color) {
@@ -162,22 +174,30 @@ class MaskGuide {
         this.screenHeight = this.docNode.scrollHeight;
 
         // 3.1 set mask
-        this.maskNode.style.boxSizing = "border-box";
-        this.maskNode.style.zIndex = "900";
+        // this.maskNode.style.boxSizing = "border-box";
+        this.maskNode.style.zIndex = "1200";
 
         // 3.2 screen
         this.maskNode.style.width = this.screenWidth + "px";
         this.maskNode.style.height = this.screenHeight + "px";
 
         // 3.3 border
-        this.maskNode.style.borderLeft = this.getAbsoluteLeft - 10 + "px";
-        this.maskNode.style.borderTop = this.getAbsoluteTop - 10 + "px";
-        this.maskNode.style.borderBottom = this.screenHeight - this.offsetHeight - this.getAbsoluteTop - 10 + "px" + " solid";
-        this.maskNode.style.borderRight = (this.screenWidth - this.offsetWidth - this.getAbsoluteLeft - 10 > 0 ? this.screenWidth - this.offsetWidth - this.getAbsoluteLeft - 10 : 0) + "px" + " solid";
+        let left = this.getAbsoluteLeft - 10
+        let top = this.getAbsoluteTop - 10
+        let bottom = this.screenHeight - this.offsetHeight - this.getAbsoluteTop - 10 
+        let right = this.screenWidth - this.offsetWidth - this.getAbsoluteLeft - 10 
+        if (left < 0) left = 0
+        if (top < 0) top = 0
+        if (bottom < 0) bottom = 0
+        if (right < 0) right = 0
+        this.maskNode.style.borderLeft = left + "px"
+        this.maskNode.style.borderTop = top + "px";
+        this.maskNode.style.borderBottom = bottom + "px" + " solid";
+        this.maskNode.style.borderRight = right + "px" + " solid";
         this.maskNode.style.borderColor = "rgba(0, 0, 0, 0.5)";
         this.maskNode.style.borderStyle = 'solid';
 
-        this.maskNode.style.backgroundColor = "rgba(225, 225, 225, 0.1)";
+        this.maskNode.style.backgroundColor = "rgba(225, 225, 225, 0.20)";
         this.maskNode.style.position = "absolute";
         this.maskNode.style.left = 0;
         this.maskNode.style.top = 0;
@@ -193,21 +213,37 @@ class MaskGuide {
         this.maskTipNode.style.alignItems = "center";
 
         this.maskTipNode.style.top = this.offsetHeight + 35 + "px";
-        let diff = this.getAbsoluteRight + 30
-
+        
+        var diff = this.getAbsoluteLeft + 410;
         if (diff > document.documentElement.clientWidth) {
-            let move = diff - document.documentElement.clientWidth + 50
-            this.maskTipNode.style.left = '-390px'
+            var move = diff - document.documentElement.clientWidth + 20;
+            this.maskTipNode.style.left = -move + 'px';
         } else {
-            this.maskTipNode.style.left = "0px";
+            this.maskTipNode.style.left = "1px";
         }
 
-        this.maskTipNode.style.backgroundColor = "white"
+        var diffTop = this.getAbsoluteBottom + 200
+        if (diffTop > document.documentElement.clientHeight) {
+            var move = diffTop - document.documentElement.clientHeight + 20 + this.offsetHeight; //this.maskTipNode.offsetHeight
+            this.maskTipNode.style.top = -move + 'px';
+        }
+
         this.maskTipNode.style.borderRadius = "3px"
         this.maskTipNode.style.padding = "15px"
         this.maskTipNode.style.minWidth = "390px"
         this.maskTipNode.style.maxWidth = "400px"
         this.maskTipNode.style.boxShadow = "rgba(0, 0, 0, 0.36) 1px 2px 13px 2px"
+
+
+        if (this.options.mode === 'dark') {
+            this.maskTipNode.style.backgroundColor = "rgba(53, 53, 53, 0.97)"
+            this.maskTipNode.style.color = 'smokewhite'
+            // console.log("initCSS -> this.maskTipNode.style.color", this.maskTipNode.style.color)
+        } else {
+            this.maskTipNode.style.backgroundColor = "white"
+            this.maskTipNode.style.color = 'black'
+            // console.log("initCSS -> this.maskTipNode.style.color", this.maskTipNode.style.color)
+        }
     }
 
     setIntro() {
@@ -242,7 +278,7 @@ class MaskGuide {
         this.maskTipNode.style.alignItems = "center";
 
         this.maskTipNode.style.top = this.clientHeight / 6 + "px";
-        this.maskTipNode.style.left = this.clientWidth / 7 * 2 + "px";
+        this.maskTipNode.style.left = this.clientWidth / 10 * 3 + "px";
 
 
 
@@ -251,6 +287,16 @@ class MaskGuide {
         this.maskTipNode.style.padding = "15px"
         this.maskTipNode.style.width = "40%"
         this.maskTipNode.style.boxShadow = "rgba(0, 0, 0, 0.36) 1px 2px 13px 2px"
+
+        if (this.options.mode === 'dark') {
+            this.maskTipNode.style.backgroundColor = "rgba(53, 53, 53, 0.97)"
+            this.maskTipNode.style.color = 'whitesmoke'
+            // console.log("initCSS -> this.maskTipNode.style.color", this.maskTipNode.style.color)
+        } else {
+            this.maskTipNode.style.backgroundColor = "white"
+            this.maskTipNode.style.color = 'black'
+            // console.log("initCSS -> this.maskTipNode.style.color", this.maskTipNode.style.color)
+        }
 
     }
 
@@ -263,12 +309,15 @@ class MaskGuide {
 
     setMaskHeaderNode(header) {
         if (header) {
+            this.maskHeaderNode.style.display = 'block'
             this.maskHeaderNode.width = "80%"
             this.maskHeaderNode.innerHTML = header || null
             this.maskHeaderNode.style.wordWrap = "break-word"
             this.maskHeaderNode.style.padding = '10px'
         } else {
+            this.maskHeaderNode.innerHTML = null
             this.maskHeaderNode.style.padding = '0px'
+            this.maskHeaderNode.style.display = 'none'
         }
     }
 
@@ -295,23 +344,26 @@ class MaskGuide {
     setMaskBtnNode() {
 
         let refreshMask = throttle(() => {
-            if (this.count == 0 && this.guides[0].intro){
+            console.log('resize');
+            
+            if (this.count == 0 && this.guides[0].intro) {
                 this.introStart()
             }
-            if (this.count > 0){
+            if (!this.guides[0].intro || this.count > 0) {
                 this.maskStart(this.guides[this.count])
             }
-        }, 500)
+            // console.log('==');
+        }, 1000)
 
-        let refreshMaskWithContext = refreshMask.bind(this);
+        // let refreshMaskWithContext = refreshMask.bind(this);
 
         // add event resize
-        window.addEventListener('resize', refreshMaskWithContext);
+        window.addEventListener('resize', refreshMask);
 
         let clearEvent = () => {
             remove()
-            document.removeEventListener('keydown', keyEvent);
-            document.removeEventListener('resize', refreshMask);
+            // document.removeEventListener('keydown', keyEventMKGuide);
+            window.removeEventListener('resize', refreshMask);
         }
 
 
@@ -326,11 +378,11 @@ class MaskGuide {
         // next btn
         this.maskBtnNextNode.innerHTML = 'Next→'
         this.next = (e) => {
-            this.intro = true;
-            if (this.guides[this.count].element) {
-                // clear focus
-                document.querySelector(this.guides[this.count].element).blur()
-            }
+            if (this.guides[0].intro) this.intro = true;
+            // if (this.guides[this.count].element) {
+            //     // clear focus
+            //     document.querySelector(this.guides[this.count].element).blur()
+            // }
 
             // console.log(document.body.focus());
             this.count++
@@ -353,8 +405,8 @@ class MaskGuide {
         this.maskBtnBeforeNode.style.visibility = "hidden"
         this.maskBtnBeforeNode.innerHTML = '←Before'
         this.before = (e) => {
-            // clear focus
-            document.querySelector(this.guides[this.count].element).blur()
+            // // clear focus
+            // document.querySelector(this.guides[this.count].element).blur()
             if (this.intro == true) {
                 if (this.count > 1) {
                     this.count--
@@ -375,7 +427,7 @@ class MaskGuide {
         this.maskBtnBeforeNode.onclick = this.before;
 
         // keypress
-        let keyEvent = (e) => { //event is what we tap in the keyboard
+        let keyEventMKGuide = (event) => { //event is what we tap in the keyboard
             if (event.keyCode === 37 || event.which === 37) {
                 this.before();
             }
@@ -386,7 +438,7 @@ class MaskGuide {
                 this.skip();
             }
         }
-        document.addEventListener('keydown', keyEvent);
+        // document.addEventListener('keydown', keyEventMKGuide);
 
         let remove = () => {
             // var elem = document.querySelector('.mask-0230');
@@ -395,13 +447,15 @@ class MaskGuide {
     }
 
     maskStart(guide) {
-
-        if (guide) {
+        console.log("maskStart -> guide.element", guide.element)
+        if (guide.element !== 'undefined') {
+            // console.log("=========")
             this.maskTipNode.style.display = 'none';
             let ele = document.querySelector(guide.element)
-            if (guide.shouldFocus) {
-                ele.focus();
-            }
+            // if (guide.shouldFocus) {
+            //     ele.focus();
+            // }
+            console.dir(ele)
             this.setMask(ele)
             this.setMaskTip()
             this.setMaskDesNode(guide.description)
@@ -412,6 +466,17 @@ class MaskGuide {
     }
 
     start() {
+        if (!this.isStart) {
+            // 1. init
+            this.initValues()
+            this.initNode()
+            this.setMaskBtnNode() // add even to button
+            this.initCSS()
+
+            this.isStart = true
+        }
+
+
         this.maskNode.style.display = 'block';
         if (this.guides[0].intro) {
             this.introStart()
@@ -427,6 +492,7 @@ class MaskGuide {
         this.setMaskHeaderNode(this.guides[0].header)
         this.setMaskPicNode(this.guides[0].imgURL)
     }
+
 
 }
 

@@ -237,7 +237,7 @@ class MaskGuide {
 
         if (this.options.mode === 'dark') {
             this.maskTipNode.style.backgroundColor = "rgba(53, 53, 53, 0.97)"
-            this.maskTipNode.style.color = 'smokewhite'
+            this.maskTipNode.style.color = 'whitesmoke'
             // console.log("initCSS -> this.maskTipNode.style.color", this.maskTipNode.style.color)
         } else {
             this.maskTipNode.style.backgroundColor = "white"
@@ -302,7 +302,7 @@ class MaskGuide {
 
     setMaskDesNode(des) {
         this.maskDesNode.width = "80%"
-        this.maskDesNode.innerHTML = des
+        this.maskDesNode.innerHTML = des || null
         this.maskDesNode.style.wordWrap = "break-word"
         this.maskDesNode.style.textAlign = "center"
     }
@@ -492,8 +492,6 @@ class MaskGuide {
         this.setMaskHeaderNode(this.guides[0].header)
         this.setMaskPicNode(this.guides[0].imgURL)
     }
-
-
 }
 
 

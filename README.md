@@ -113,6 +113,9 @@ mask.guides = [
 
 
 ## update history
+### v1.11
+Added: Implemented the function of highlighting the fixed element and refreshing when scrolling.
+
 ### v1.10
 Debug: Fixed the bug of display about the bottom item
 

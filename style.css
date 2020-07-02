@@ -35,7 +35,11 @@
   color: black;
   /* border: 2px solid #348b86; */
   border: 2px solid;
+}
 
+
+.mask .mask-tip button:focus {
+  border: 3.5px solid #3261fc !important;
 }
 
 /* .mask .mask-tip button:hover { */

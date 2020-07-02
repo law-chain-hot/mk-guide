@@ -359,11 +359,14 @@ class MaskGuide {
 
         // add event resize
         window.addEventListener('resize', refreshMask);
+        window.addEventListener('scroll', refreshMask);
 
         let clearEvent = () => {
             remove()
             // document.removeEventListener('keydown', keyEventMKGuide);
             window.removeEventListener('resize', refreshMask);
+            window.addEventListener('scroll', refreshMask);
+
         }
 
 
@@ -378,6 +381,7 @@ class MaskGuide {
         // next btn
         this.maskBtnNextNode.innerHTML = 'Next→'
         this.next = (e) => {
+            this.maskBtnNextNode.focus()
             if (this.guides[0].intro) this.intro = true;
             // if (this.guides[this.count].element) {
             //     // clear focus
@@ -466,6 +470,7 @@ class MaskGuide {
     }
 
     start() {
+
         if (!this.isStart) {
             // 1. init
             this.initValues()
@@ -474,6 +479,7 @@ class MaskGuide {
             this.initCSS()
 
             this.isStart = true
+
         }
 
 
@@ -483,14 +489,19 @@ class MaskGuide {
         } else if (this.guides) {
             this.maskStart(this.guides[this.count])
         }
+        this.maskBtnNextNode.focus()
+
     }
 
     introStart() {
+        // this.maskBtnNextNode.focus()
         this.setIntro()
         // this.setMaskTip()
         this.setMaskDesNode(this.guides[0].description)
         this.setMaskHeaderNode(this.guides[0].header)
         this.setMaskPicNode(this.guides[0].imgURL)
+        this.maskBtnNextNode.focus()
+
     }
 }
 

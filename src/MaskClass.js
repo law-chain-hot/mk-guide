@@ -1,4 +1,4 @@
-const throttle = function (fn, delay) {
+const debounce = function (fn, delay) {
     let timer = null
     return function () {
         const context = this
@@ -343,7 +343,7 @@ class MaskGuide {
 
     setMaskBtnNode() {
 
-        let refreshMask = throttle(() => {
+        let refreshMask = debounce(() => {
             console.log('resize');
             
             if (this.count == 0 && this.guides[0].intro) {

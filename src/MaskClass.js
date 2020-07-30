@@ -1,15 +1,13 @@
-const debounce = function (fn, delay) {
-    let timer = null
-    return function () {
+const throttle = function (fn, delay) {
+    let canRun = true
+    return function (...args) {
         const context = this
-        let args = arguments
-        if (!timer) {
-            timer = setTimeout(() => {
-                fn.apply(context, args)
-                clearTimeout(timer)
-                timer = null;
-            }, delay)
-        }
+        if (canRun === false) return
+        canRun = false
+        setTimeout(() => {
+            fn.apply(this, args)
+            canRun = true;
+        }, delay)
     }
 }
 
@@ -343,7 +341,7 @@ class MaskGuide {
 
     setMaskBtnNode() {
 
-        let refreshMask = debounce(() => {
+        let refreshMask = throttle(() => {
             console.log('resize');
             
             if (this.count == 0 && this.guides[0].intro) {
@@ -353,7 +351,7 @@ class MaskGuide {
                 this.maskStart(this.guides[this.count])
             }
             // console.log('==');
-        }, 1000)
+        }, 50)
 
         // let refreshMaskWithContext = refreshMask.bind(this);
 

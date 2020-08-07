@@ -343,7 +343,7 @@ class MaskGuide {
     setMaskBtnNode() {
 
         let refreshMask = throttle(() => {
-            console.log('resize');
+            // console.log('resize');
             
             if (this.count == 0 && this.guides[0].intro) {
                 this.introStart()
@@ -452,7 +452,7 @@ class MaskGuide {
     }
 
     maskStart(guide) {
-        console.log("maskStart -> guide.element", guide.element)
+        // console.log("maskStart -> guide.element", guide.element)
         if (guide.element !== 'undefined') {
             // console.log("=========")
             this.maskTipNode.style.display = 'none';
@@ -460,7 +460,7 @@ class MaskGuide {
             // if (guide.shouldFocus) {
             //     ele.focus();
             // }
-            console.dir(ele)
+            // console.dir(ele)
             this.setMask(ele)
             this.setMaskTip()
             this.setMaskDesNode(guide.description)

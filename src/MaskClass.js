@@ -18,6 +18,7 @@ class MaskGuide {
             // buttonColor: 'black',
             // skipButtonColor: 'firebrick',
             mouseHover: 'true',
+            isKeyboard: false,
             ...option,
         };
 
@@ -361,7 +362,7 @@ class MaskGuide {
 
         let clearEvent = () => {
             remove()
-            // document.removeEventListener('keydown', keyEventMKGuide);
+            document.removeEventListener('keydown', keyEventMKGuide);
             window.removeEventListener('resize', refreshMask);
             window.addEventListener('scroll', refreshMask);
 
@@ -440,7 +441,9 @@ class MaskGuide {
                 this.skip();
             }
         }
-        // document.addEventListener('keydown', keyEventMKGuide);
+
+        if(this.options.isKeyboard) 
+            document.addEventListener('keydown', keyEventMKGuide);
 
         let remove = () => {
             // var elem = document.querySelector('.mask-0230');

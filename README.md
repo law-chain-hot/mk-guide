@@ -113,6 +113,9 @@ mask.guides = [
 
 
 ## update history
+### v1.12
+Added: IsKeyboard is supported, which can be used to control keyboard.
+
 ### v1.11
 Added: Implemented the function of highlighting the fixed element and refreshing when scrolling.
 

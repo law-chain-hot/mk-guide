@@ -1,6 +1,6 @@
 {
   "name": "mk-guide",
-  "version": "1.11.2",
+  "version": "1.12.0",
   "description": "A light JavaScript library to guide the user to focus the important part, including fix element",
   "main": "index.js",
   "style": "style.css",

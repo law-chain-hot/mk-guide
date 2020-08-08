@@ -56,7 +56,9 @@ let mask = new MkGuide({
     buttonColor: "gold", // optional   
     skipButtonColor: "firebrick", // optional
     mouseHover: "true", // optional  default:false
-    mode: "dark" // default: light
+    mode: "dark", // default: light
+    isFocus: false, // default: true
+    isKeyboard: true
 })  
 ```
 
@@ -70,12 +72,10 @@ mask.guides = [
         imgURL: 'https://xxxx/xxx.com',
         header: 'Welcome',
         description: "this is step 1"    // the words of tip
-        shouldFocus: true                // optional: focus the element when you highlight it
     },
     {   
         element: ".step2",
         description: "Tap in here, and focus it (shouldFocus: true)"
-        shouldFocus: true // optional: focus the element when you highlight it
     },
     {
         element: "box3",
@@ -100,7 +100,6 @@ mask.guides = [
     {   
         element: ".step2",
         description: "Tap in here, and focus it (shouldFocus: true)"
-        shouldFocus: true // optional: focus the element when you highlight it
     },
     {
         element: "box3",

@@ -19,6 +19,7 @@ class MaskGuide {
             // skipButtonColor: 'firebrick',
             mouseHover: 'true',
             isKeyboard: false,
+            isFocus: 'true',
             ...option,
         };
 
@@ -380,7 +381,7 @@ class MaskGuide {
         // next btn
         this.maskBtnNextNode.innerHTML = 'Next→'
         this.next = (e) => {
-            this.maskBtnNextNode.focus()
+            this.options.isFocus && this.maskBtnNextNode.focus()
             if (this.guides[0].intro) this.intro = true;
             // if (this.guides[this.count].element) {
             //     // clear focus
@@ -490,7 +491,7 @@ class MaskGuide {
         } else if (this.guides) {
             this.maskStart(this.guides[this.count])
         }
-        this.maskBtnNextNode.focus()
+        this.options.isFocus && this.maskBtnNextNode.focus()
 
     }
 
@@ -501,7 +502,7 @@ class MaskGuide {
         this.setMaskDesNode(this.guides[0].description)
         this.setMaskHeaderNode(this.guides[0].header)
         this.setMaskPicNode(this.guides[0].imgURL)
-        this.maskBtnNextNode.focus()
+        this.options.isFocus && this.maskBtnNextNode.focus()
 
     }
 }
